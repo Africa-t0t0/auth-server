@@ -5,9 +5,9 @@ def handle_server_configuration() -> dict:
     credentials_dd = credentials.get_server_configuration_dict()
 
     if credentials_dd["environment"] == "LOCAL":
-        debug = False
-    else:
         debug = True
+    else:
+        debug = False
 
     port = credentials_dd["port"]
 
