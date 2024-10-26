@@ -12,3 +12,14 @@ def get_database_credentials_dict() -> dict:
     }
     return dd
 
+
+def get_server_configuration_dict() -> dict:
+    """
+    Contains information about the server configuration, like port, current environment (local or prod)
+    :return: config dict
+    """
+    dd = {
+        "environment": os.getenv("ENVIRONMENT"),
+        "port": os.getenv("PORT"),
+    }
+    return dd

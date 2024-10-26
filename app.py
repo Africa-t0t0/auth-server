@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from utils import handlers
 from utils import database_config
 from models import db, User
 
@@ -47,6 +48,12 @@ def protected():
 
 
 if __name__ == "__main__":
+    cleaned_dd = handlers.handle_server_configuration()
+
+    debug = cleaned_dd["debug"]
+    port = cleaned_dd["port"]
+
     with app.app_context():
-        db.create_all()  # Crea todas las tablas basadas en los modelos definidos
-    app.run(debug=True, port=5002)
+        db.create_all()
+
+    app.run(debug=debug, port=port)
