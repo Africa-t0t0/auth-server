@@ -1,25 +1,18 @@
-import os
-
 from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from utils import database_config
+from models import db, User
+
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(database_config.Config)
-db = SQLAlchemy(app)
+db.init_app(app=app)
 jwt = JWTManager(app)
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)
 
 
 @app.route("/register", methods=["POST"])
